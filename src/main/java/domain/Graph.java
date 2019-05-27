@@ -82,7 +82,9 @@ public class Graph {
         //距离及访问标记
         Map<Integer, Integer> distance = new HashMap<Integer, Integer>();
         //加载起始节点
-        q.add(vertices.get(source));
+        Vertex sourceVertex = vertices.get(source);
+        if (sourceVertex == null) return;
+        q.add(sourceVertex);
         distance.put(source, 0);
 
         while (!q.isEmpty()) {
@@ -118,8 +120,10 @@ public class Graph {
     public void visit(Map<Integer, Boolean> visited, Integer start) {
         //base case
         if (visited.containsKey(start)) return;
+        Vertex sourceVertex = vertices.get(start);
+        if (sourceVertex == null) return;
         visited.put(start, true);
-        for (Edge e : vertices.get(start).edgeList) {
+        for (Edge e : sourceVertex.edgeList) {
             //visit neighbour recursive
             visit(visited, e.to);
         }
